@@ -1,7 +1,7 @@
 {
   "name": "dwe-grunt-include-source",
   "description": "Include your sources into your HTML files automatically.",
-  "version": "4.1.3",
+  "version": "4.1.5",
   "homepage": "https://github.com/abfrad/grunt-include-source",
   "author": {
     "name": "Abdullah Frahmand",
