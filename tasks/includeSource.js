@@ -106,15 +106,15 @@ module.exports = function (grunt) {
         'less': 'scss'
     };
 
-    var resolveFiles = function (options) {
+    var resolveFiles = function (options , includeType) {
         var basePath = options.basePath;
         grunt.log.debug('Resolving files on base path "' + basePath + '"...');
         grunt.log.debug('Include options: ' + util.inspect(options));
         basePath = grunt.config.process(basePath);
         var files, sourcePath = '';
-            grunt.log.debug('Resolving files from include property...');
-            // Retrieve files property. If it's a string, process it as a template.
-            files = options.sources;
+        grunt.log.debug('Resolving files from include property...');
+        // Retrieve files property. If it's a string, process it as a template.
+        files = options.sources[includeType];
         if (!files) {
             grunt.log.debug('No files found.');
             return [];
@@ -264,16 +264,16 @@ module.exports = function (grunt) {
             // Get the includes and rewrite the contents.
             var includes = parserFn(contents);
             var currentOffset = 0;
-
             grunt.log.debug('Found ' + includes.length + ' include statement(s).');
 
             includes.forEach(function (include, includeIndex) {
+                var includeType = include.options.type;
                 var files = [];
                 var baseUrl;
                 if (include.options.target && options.target !== include.options.target) {
                     grunt.log.debug('Include target is "' + include.options.target + '" and task target is "' + options.target + '", skipping include.');
                 } else {
-                    files = resolveFiles(options);
+                    files = resolveFiles(options , includeType);
                 }
                 orderFiles(files, include.options);
 
@@ -315,7 +315,6 @@ module.exports = function (grunt) {
                     grunt.log.debug('Including file "' + file + '".');
 
                     // Map the include type.
-                    var includeType = include.options.type;
                     var mappedIncludeType = typeMappings[includeType];
                     if (mappedIncludeType) {
                         grunt.log.debug('Include type "' + includeType + '" maps to "' + mappedIncludeType + '"');
