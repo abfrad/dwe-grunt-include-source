@@ -115,7 +115,6 @@ module.exports = function (grunt) {
             grunt.log.debug('Resolving files from include property...');
             // Retrieve files property. If it's a string, process it as a template.
             files = options.sources;
-            console.log(files);
         if (!files) {
             grunt.log.debug('No files found.');
             return [];
@@ -192,7 +191,6 @@ module.exports = function (grunt) {
     // Register the task.
     grunt.registerMultiTask('includeSource', 'Include lists of files into your source files automatically.', function () {
         grunt.log.debug('Starting task "includeSource"...');
-        console.log(this.data);
         var options = this.options({
             basePath: '',
             baseUrl: '',
